@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Produkter";
+}
+<h1>@ViewData["Title"]</h1>
+
+@model IEnumerable<Models.ProductModels.ProductModel>
+<hr />
+<h4>Sök produkt</h4>
+@using (Html.BeginForm("Search", "Product", FormMethod.Post))
+{
+    <div style="width: 400px; height: 40px; display: flex;">
+        <input class="form-control" type="text" name="productName" id="productName" />
+        <input class="btn btn-secondary" type="submit" value="Sök produkt" style="width: 200px; margin-left: 10px;" />
+    </div>
+}
+<hr/>
+<h4>Produkten hittades inte, försök igen.</h4>
+<hr /> 

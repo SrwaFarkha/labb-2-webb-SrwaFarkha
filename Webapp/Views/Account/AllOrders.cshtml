@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Models.OrderModels.OrderModel>
+<h1>Alla ordrar</h1>
+<hr/>
+
+
+<div class="accordion" id="accordionExample">
+
+	@foreach (var orders in Model)
+	{
+		var collapseId = $"collapse_{Guid.NewGuid()}";
+
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="heading@user.FirstName">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="true" aria-controls="@collapseId">
+					@orders.Account.EmailAddress
+				</button>
+			</h2>
+			<div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="heading@user.FirstName" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Namn</th>
+							<th scope="col">Pris</th>
+							<th scope="col">Antal</th>
+							<th scope="col">Total pris</th>
+						</tr>
+						</thead>
+						@foreach (var product in orders.OrderDetails)
+						{
+							<tbody>
+							<tr>
+								<td>@product.ProductName</td>
+								<td>@product.Price</td>
+								<td>@product.Quantity</td>
+								<td>@product.TotalProductsPrice.ToString("0.00")</td>
+							</tr>
+							</tbody>
+						}
+
+					</table>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+

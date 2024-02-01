@@ -1,0 +1,97 @@
+﻿@using System.Security.Claims
+@model Models.AccountModels.AccountModel
+
+<h1>Välkommen @Model.FirstName</h1>
+<hr/>
+
+<div class="left container mt-3">
+<ul class="nav flex-column">
+	<li class="nav-item">
+		<a class="nav-link disabled" href="">Profil</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" asp-area="" asp-controller="Account" asp-action="ShowUsersOrder">Beställningar</a>
+	</li>
+@if (User.FindFirstValue(ClaimTypes.Role) == "True")
+{
+	<li class="nav-item">
+		<a class="nav-link" asp-area="" asp-controller="Account" asp-action="ShowAllAccounts">Kunder</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" asp-area="" asp-controller="Account" asp-action="ShowAllOrders">Alla ordrar</a>
+	</li>
+
+}
+</ul>
+</div>
+<form asp-controller="Account" asp-action="StartUpdateAccount" method="POST">
+	<div class="info">
+		<h3>Profilinställningar</h3>
+
+		<div class="mb-3">
+			<label asp-for="FirstName" class="form-label">Namn:</label>
+			<input asp-for="FirstName" type="text" id="FirstName" class="form-control" placeholder="@Model.FirstName"/>
+
+		</div>
+		<div class="mb-3">
+			<label asp-for="LastName" class="form-label">Efternamn:</label>
+			<input asp-for="LastName" type="text" id="LastName" class="form-control" placeholder="@Model.LastName"/>
+
+		</div>
+		<div class="mb-3">
+			<label asp-for="EmailAddress" class="form-label">Email:</label>
+			<input asp-for="EmailAddress" type="text" id="Email" class="form-control" placeholder="@Model.EmailAddress"/>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Password" class="form-label">Lösenord:</label>
+			<input asp-for="Password" type="text" id="Password" class="form-control" placeholder="@Model.Password"/>
+		</div>
+		<div class="mb-3">
+			<label asp-for="PhoneNumber" class="form-label">Telefon nummer:</label>
+			<input asp-for="PhoneNumber" type="text" id="PhoneNumber" class="form-control" placeholder="@Model.PhoneNumber" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Address.City" class="form-label">Stad:</label>
+			<input asp-for="Address.City" type="text" id="City" class="form-control" placeholder="@Model.Address.City" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Address.StreetAddress" class="form-label">Adress:</label>
+			<input asp-for="Address.StreetAddress" type="text" id="StreetAddress" class="form-control" placeholder="@Model.Address.StreetAddress" />
+		</div>
+
+	</div>
+
+	<button type="submit" class="spara-andringar btn btn-primary">Spara Ändringar</button>
+</form>
+
+<style>
+	
+    .left{
+        width: 20%;
+        float: left;
+    }
+    
+    .nav {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+    }
+
+    .nav li {
+        margin: 1px 0;
+    }
+
+    .nav li a {
+        display: block;
+        line-height: 3em;
+        width: 100%;
+        text-decoration: none;
+    }
+    .info{
+        float: left;
+        width: 77%;
+    }
+
+
+</style>

@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Models.AccountModels.AccountModel>
+<h1>Alla kunder</h1>
+<hr/>
+<div>
+	<h4>Sök kund</h4>
+	@using (Html.BeginForm("Search", "Account", FormMethod.Post))
+	{
+		<div style="width: 400px; height: 40px; display: flex;">
+			<input class="form-control" type="text" name="customerEmail" id="customerEmail" />
+			<input class="btn btn-secondary" type="submit" value="Sök kund" style="width: 200px; margin-left: 10px;" />
+		</div>
+	}
+</div>
+<br></br>
+<div class="accordion" id="accordionExample">
+	@foreach (var account in Model)
+	{
+		var collapseId = $"collapse_{Guid.NewGuid()}";
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="heading@user.FirstName">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="true" aria-controls="@collapseId">
+					@account.EmailAddress
+					</button>
+				</h2>
+			<div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="heading@user.FirstName" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Förnamn</th>
+							<th scope="col">Efternamn</th>
+							<th scope="col">Email</th>
+							<th scope="col">Telefon nummer</th>
+							<th scope="col">Stad</th>
+							<th scope="col">Adress</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>@account.FirstName</td>
+							<td>@account.LastName</td>
+							<td>@account.EmailAddress</td>
+							<td>@account.PhoneNumber</td>
+							<td>@account.Address.City</td>
+							<td>@account.Address.StreetAddress</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+	}
+</div>

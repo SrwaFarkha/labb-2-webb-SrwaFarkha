@@ -1,0 +1,27 @@
+﻿
+@model List<Models.AccountModels.ProductCartModel>
+
+<table class="table table-bordered table-striped table-hover table-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Produkt Namn</th>
+            <th>Beskrivning</th>
+            <th>Pris </th>
+            <th>Antal</th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.ProductDescription</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

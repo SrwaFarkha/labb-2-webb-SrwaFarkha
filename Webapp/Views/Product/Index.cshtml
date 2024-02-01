@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Produkter";
+}
+<h1>@ViewData["Title"]</h1>
+
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Models.ProductModels.ProductModel>
+<hr/>
+
+<div style="display: flex; justify-content: space-between">
+    <div>
+        <h4>Sök produkt</h4>
+        @using (Html.BeginForm("Search", "Product", FormMethod.Post))
+        {
+            <div style="width: 400px; height: 40px; display: flex;">
+                <input class="form-control" type="text" name="productName" id="productName" />
+                <input class="btn btn-secondary" type="submit" value="Sök produkt" style="width: 200px; margin-left: 10px;" />
+            </div>
+        }
+    </div>
+	<div style="align-self: end;">
+        @if (User.Identity.IsAuthenticated)
+        {
+			@using (Html.BeginForm("ShowShoppingCart", "Product", FormMethod.Post))
+			{
+				<input class="btn btn-info" type="submit" value="Visa varukorg"/>
+			}
+        }
+		
+	</div>
+</div>
+
+<hr/>
+<table class="table table-bordered table-striped table-hover table-sm">
+    <thead class="table-dark">
+    <tr>
+        <th>Produkt Namn</th>
+        <th>Beskrivning</th>
+        <th>Pris </th>
+        <th>Kategori</th>
+	    <th>I lager</th>
+    @if (User.FindFirstValue(ClaimTypes.Role) == "True")
+    {
+	    <th></th>
+	    <th></th>
+	    <th></th>
+    }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+	    <tr>
+
+		    <td>@item.ProductName</td>
+		    <td>@item.ProductDescription</td>
+		    <td>@item.Price</td>
+		    <td>@item.CategoryName</td>
+            
+            @if (item.Discontinued)
+            {
+	            <td>Nej</td>
+            }
+            else
+            {
+	            <td>Ja</td>
+
+            }
+		    
+
+		    @if (User.FindFirstValue(ClaimTypes.Role) == "True")
+		    {
+			    <th style="text-align: center;"><a asp-action="Delete" asp-route-productId="@item.ProductId"><i class="btn btn-danger">Ta bort</i></a></th>
+			    <th style="text-align: center;"><a asp-action="Edit" asp-route-productId="@item.ProductId"><i class="btn btn-primary">Editera</i></a></th>
+		    }
+            @if (User.Identity.IsAuthenticated && !@item.Discontinued)
+            {
+	            <th style="text-align: center;"><a asp-action="AddToCart" asp-route-productId="@item.ProductId"><i class="btn btn-success">Lägg till i varukorg</i></a></th>
+            }
+
+	    </tr>
+    }
+    
+    </tbody>
+
+</table>
+
+<hr>
+@if (User.FindFirstValue(ClaimTypes.Role) == "True")
+{
+	<a asp-action="Create">Lägg till en ny produkt</a>
+}
